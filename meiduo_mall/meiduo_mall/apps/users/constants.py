@@ -1,0 +1,2 @@
+# 激活邮箱地址的有效期
+VERIFY_EMAIL_TOKEN_EXPIRES = 2 * 24 * 60 * 60

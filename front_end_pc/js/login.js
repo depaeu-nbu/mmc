@@ -58,10 +58,14 @@ var vm = new Vue({
                             localStorage.username = response.data.username;
                         } else {
                             // 未记住登录
+                            alert(response.data.token);
+                            alert(response.data.user_id);
+                            alert(response.data.username);
                             localStorage.clear();
                             sessionStorage.token = response.data.token;
                             sessionStorage.user_id = response.data.user_id;
                             sessionStorage.username = response.data.username;
+                            alert(111111111)
                         }
 
                         // 跳转页面
