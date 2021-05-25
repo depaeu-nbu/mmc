@@ -2,7 +2,7 @@ import re
 
 from django.contrib.auth.backends import ModelBackend
 
-from users.models import User
+from .models import User
 
 
 def jwt_response_payload_handler(token, user=None, request=None):
@@ -38,7 +38,7 @@ class UsernameMobileAuthBackend(ModelBackend):
         if user is not None and user.check_password(password):
             return user
 
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadData
 from django.conf import settings
 from users import constants
 
@@ -53,6 +53,16 @@ def generate_save_user_token_url(user):
     token = token.decode()
 
     # 拼接url地址
-    verify_url = settings.VERIFY_EMAIL_HTML+ '?token=' + token
+    verify_url = settings.VERIFY_EMAIL_HTML + '?token=' + token
 
     return verify_url
+
+
+def check_verify_email_token(token):
+    # serializer = Serializer(秘钥, 有效期秒)
+    serializer = Serializer(settings.SECRET_KEY, constants.VERIFY_EMAIL_TOKEN_EXPIRES)
+    try:
+        data = serializer.loads(token)
+        return data["user_id"]
+    except BadData:
+        return None

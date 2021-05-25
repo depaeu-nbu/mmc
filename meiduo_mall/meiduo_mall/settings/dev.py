@@ -62,8 +62,8 @@ INSTALLED_APPS = [
 
     # 自定义子应用
     'users.apps.UsersConfig',
-    'verifications.apps.VerificationsConfig', # 验证功能[短信]
-    'oauth.apps.OauthConfig' # qq登录
+    'verifications.apps.VerificationsConfig',  # 验证功能[短信]
+    'oauth.apps.OauthConfig'  # qq登录
 
 ]
 
@@ -219,12 +219,6 @@ LOGGING = {
     }
 }
 
-# 修改Django REST framework的默认异常处理方法
-REST_FRAMEWORK = {
-    # 设置自定义的异常处理[新增了数据库异常处理]
-    'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler',
-}
-
 # 注册jwt
 JWT_AUTH = {
     # 设置jwt的有效期
@@ -233,6 +227,19 @@ JWT_AUTH = {
     # 'JWT_RESPONSE_PAYLOAD_HANDLER': 'users.utils.jwt_response_payload_handler',
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'users.utils.jwt_response_payload_handler',
 }
+
+# 修改Django REST framework的默认异常处理方法
+REST_FRAMEWORK = {
+    # 设置自定义的异常处理[新增了数据库异常处理]
+    'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+
 
 # 告知django在登陆认证时使用我们自定义的认证
 AUTHENTICATION_BACKENDS = [

@@ -65,7 +65,7 @@ var vm = new Vue({
                             sessionStorage.token = response.data.token;
                             sessionStorage.user_id = response.data.user_id;
                             sessionStorage.username = response.data.username;
-                            alert(111111111)
+
                         }
 
                         // 跳转页面
