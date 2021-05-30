@@ -59,6 +59,9 @@ INSTALLED_APPS = [
     # 第三方子应用
     'rest_framework',
     'corsheaders',
+    'ckeditor',  # 富集文本编辑器
+    'ckeditor_uploader',  # 富集文本编辑器上传模块
+
 
     # 自定义子应用
     'users.apps.UsersConfig',
@@ -274,3 +277,21 @@ EMAIL_HOST_PASSWORD = 'jansen1204'
 EMAIL_FROM = '美多商城<jansen_fantast@163.com>'
 # 邮箱激活页面地址
 VERIFY_EMAIL_HTML = "http://www.meiduo.site:8080/success_verify_email.html"
+
+# django文件存储
+DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fastdfs.fdfs_storage.FastDFSStorage'
+
+# FastDFS相关配置信息
+FDFS_URL = "http://192.168.202.129:8888/"
+FDFS_CLIENT_CONF = os.path.join(BASE_DIR, 'utils/fastdfs/client.conf')
+
+# 富集文本编辑器
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',  # 工具条功能
+        'height': 300,  # 编辑器高度
+        # 'width': 300,  # 编辑器宽,一般不设置
+    },
+}
+
+CKEDITOR_UPLOAD_PATH = ''  # 上传图片保存路径，使用了FastDFS，所以此处设为''
