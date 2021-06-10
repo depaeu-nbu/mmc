@@ -61,13 +61,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'ckeditor',  # 富集文本编辑器
     'ckeditor_uploader',  # 富集文本编辑器上传模块
-
+    'django_crontab',  # 定时任务
 
     # 自定义子应用
     'users.apps.UsersConfig',
     'verifications.apps.VerificationsConfig',  # 验证功能[短信]
-    'oauth.apps.OauthConfig'  # qq登录
-
+    'oauth.apps.OauthConfig',  # qq登录
+    'contents.apps.ContentsConfig',  # 广告
+    'goods.apps.GoodsConfig',  # 商品
 ]
 
 MIDDLEWARE = [
@@ -87,7 +88,8 @@ ROOT_URLCONF = 'meiduo_mall.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 设置模板文件的保存目录
+        'DIRS': [os.path.join(BASE_DIR), 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -282,7 +284,7 @@ VERIFY_EMAIL_HTML = "http://www.meiduo.site:8080/success_verify_email.html"
 DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fastdfs.fdfs_storage.FastDFSStorage'
 
 # FastDFS相关配置信息
-FDFS_URL = "http://192.168.202.129:8888/"
+FDFS_URL = "http://192.168.202.128:8888/"
 FDFS_CLIENT_CONF = os.path.join(BASE_DIR, 'utils/fastdfs/client.conf')
 
 # 富集文本编辑器
@@ -296,4 +298,15 @@ CKEDITOR_CONFIGS = {
 
 CKEDITOR_UPLOAD_PATH = ''  # 上传图片保存路径，使用了FastDFS，所以此处设为''
 
-#
+# 生成的静态html文件的保存目录
+GENERATED_STATIC_HTML_FILES_DIR = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'front_end_pc')
+
+# 定时任务的设置
+CRONJOBS = [
+    # 格式：
+    # ("* * * * *", "任务的函数模块导包路径",">> 执行任务时print打印信息的输出文件[必须手动先创建]")
+    # 每1分钟执行一次生成主页静态文件
+    ('*/1 * * * *', 'contents.crons.generate_static_index_html', '>> /home/python/PycharmProjects/mmc/meiduo_mall/logs/crontab.log')
+]
+# 解决crontab中文问题
+CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'

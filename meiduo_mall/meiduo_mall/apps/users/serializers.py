@@ -8,7 +8,7 @@ from users.models import User
 
 class CreateUserSerializer(serializers.ModelSerializer):
     # 序列化字段
-    access_token = serializers.CharField(write_only=True, help_text='jwt Token')
+    token = serializers.CharField(write_only=True, help_text='jwt Token')
     password2 = serializers.CharField(label="确认密码", write_only=True)
     sms_code = serializers.CharField(label="短信验证码", write_only=True)
     allow = serializers.CharField(label="同意协议", write_only=True)
@@ -16,7 +16,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'username', 'password', 'password2', 'sms_code', 'mobile', 'allow', 'id', 'mobile'
+            'token', 'username', 'password', 'password2', 'sms_code', 'mobile', 'allow', 'id', 'mobile'
         ]
 
         extra_kwards = {
