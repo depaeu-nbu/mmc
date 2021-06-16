@@ -89,7 +89,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # 设置模板文件的保存目录
-        'DIRS': [os.path.join(BASE_DIR), 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -280,6 +280,7 @@ EMAIL_FROM = '美多商城<jansen_fantast@163.com>'
 # 邮箱激活页面地址
 VERIFY_EMAIL_HTML = "http://www.meiduo.site:8080/success_verify_email.html"
 
+
 # django文件存储
 DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fastdfs.fdfs_storage.FastDFSStorage'
 
@@ -306,7 +307,7 @@ CRONJOBS = [
     # 格式：
     # ("* * * * *", "任务的函数模块导包路径",">> 执行任务时print打印信息的输出文件[必须手动先创建]")
     # 每1分钟执行一次生成主页静态文件
-    ('*/1 * * * *', 'contents.crons.generate_static_index_html', '>> /home/python/PycharmProjects/mmc/meiduo_mall/logs/crontab.log')
+    ('*/1 * * * *', 'contents.crons.generate_static_index_html', '>> /home/python/Desktop/mmc/meiduo_mall/logs/crontab.log')
 ]
 # 解决crontab中文问题
 CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'

@@ -13,4 +13,4 @@ class ChannelSerializer(serializers.Serializer):
 class SKUSerializer(serializers.ModelSerializer):
     class Meta:
         model = SKU
-        fields = ["id","name","price","comments","default_image_url"]
+        fields = ["id", "name", "price", "comments", "default_image_url"]
